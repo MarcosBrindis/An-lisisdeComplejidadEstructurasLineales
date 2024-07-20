@@ -154,6 +154,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //--------------------------------------------------------------------------
 
+const ctx1 = document.getElementById('grafica1').getContext('2d');
+const chart1 = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: ["Bubble Sort", "Merge Sort", "Radix Sort"],
+        datasets: [
+            {
+                label: "Tiempos de Ordenación (ms) ARRAY",
+                backgroundColor: "rgb(0,0,0)",
+                data: [0, 0, 0]  // Inicializa con valores cero
+            }
+        ]
+    }
+});
+
+const ctx2 = document.getElementById('grafica2').getContext('2d');
+const chart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ["Bubble Sort", "Merge Sort", "Radix Sort"],
+        datasets: [
+            {
+                label: "ITERACIONES ARRAY",
+                backgroundColor: "rgb(0,0,0)",
+                data: [0, 0, 0]  // Inicializa con valores cero
+            }
+        ]
+    }
+});
+
+const ctx3 = document.getElementById('grafica3').getContext('2d');
+const chart3 = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: ["Bubble Sort", "Merge Sort", "Radix Sort"],
+        datasets: [
+            {
+                label: "Tiempos de Ordenación (ms) LINKEDLIST",
+                backgroundColor: "rgb(0,0,0)",
+                data: [0, 0, 0]  // Inicializa con valores cero
+            }
+        ]
+    }
+});
+
+const ctx4 = document.getElementById('grafica4').getContext('2d');
+const chart4 = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: ["Bubble Sort", "Merge Sort", "Radix Sort"],
+        datasets: [
+            {
+                label: "ITERACIONES LINKEDLIST",
+                backgroundColor: "rgb(0,0,0)",
+                data: [0, 0, 0]  // Inicializa con valores cero
+            }
+        ]
+    }
+});
+
+// Event listeners for button clicks
 document.getElementById('bubbleSortArray').addEventListener('click', () => {
     console.log('Iniciando Bubble Sort en Array...');
     const startTime = performance.now();
@@ -164,8 +225,8 @@ document.getElementById('bubbleSortArray').addEventListener('click', () => {
     document.getElementById('arrayBubbleSortTime').textContent = `${duration.toFixed(2)} ms`;
     document.getElementById('arrayBubbleSortIterations').textContent = array.bubbleSortIterations;
 
-  
     console.log('Datos en Array después de Bubble Sort:', array.recorrido());
+    updateChart();
 });
 
 document.getElementById('mergeSortArray').addEventListener('click', () => {
@@ -178,11 +239,9 @@ document.getElementById('mergeSortArray').addEventListener('click', () => {
     document.getElementById('arrayMergeSortTime').textContent = `${duration.toFixed(2)} ms`;
     document.getElementById('arrayMergeSortIterations').textContent = array.mergeSortIterations;
 
-   
     console.log('Datos en Array después de Merge Sort:', array.recorrido());
+    updateChart();
 });
-
-
 
 document.getElementById('radixSortArray').addEventListener('click', () => {
     console.log('Iniciando Radix Sort en Array...');
@@ -195,8 +254,9 @@ document.getElementById('radixSortArray').addEventListener('click', () => {
     const duration = endTime - startTime;
     document.getElementById('arrayRadixSortTime').textContent = `${duration.toFixed(2)} ms`;
     document.getElementById('arrayRadixSortIterations').textContent = arrayData.length; // No hay iteraciones en radixSort
-});
 
+    updateChart();
+});
 
 document.getElementById('bubbleSortLinkedList').addEventListener('click', () => {
     console.log('Iniciando Bubble Sort en LinkedList...');
@@ -208,8 +268,8 @@ document.getElementById('bubbleSortLinkedList').addEventListener('click', () => 
     document.getElementById('linkedListBubbleSortTime').textContent = `${duration.toFixed(2)} ms`;
     document.getElementById('linkedListBubbleSortIterations').textContent = linkedList.bubbleSortIterations;
 
-  
     console.log('Datos en LinkedList después de Bubble Sort:', linkedList.recorrido());
+    updateChart();
 });
 
 document.getElementById('mergeSortLinkedList').addEventListener('click', () => {
@@ -221,21 +281,56 @@ document.getElementById('mergeSortLinkedList').addEventListener('click', () => {
     console.log(`Merge Sort en LinkedList completado en ${duration.toFixed(2)} ms`);
     document.getElementById('linkedListMergeSortTime').textContent = `${duration.toFixed(2)} ms`;
     document.getElementById('linkedListMergeSortIterations').textContent = linkedList.getMergeSortIterations();
-    
-     console.log('Datos en LinkedList después de Merge Sort:', linkedList.recorrido());
+
+    console.log('Datos en LinkedList después de Merge Sort:', linkedList.recorrido());
+    updateChart();
 });
 
 document.getElementById('radixSortLinkedList').addEventListener('click', () => {
     console.log('Iniciando Radix Sort en LinkedList...');
-    const result = linkedList.radixSort();
-    
-    console.log(`Radix Sort en LinkedList completado en ${result.time.toFixed(2)} ms`);
-    document.getElementById('linkedListRadixSortTime').textContent = `${result.time.toFixed(2)} ms`;
-    document.getElementById('linkedListRadixSortIterations').textContent = `${result.iterations} iteraciones`;
+    const startTime = performance.now();
+    const linkedListData = linkedList.recorrido(); // Obtén los objetos Business
+    console.log('Datos en LinkedList antes de Radix Sort:', linkedListData.map(b => b.business));
+    radixSortStrings(linkedListData); // Ordena los objetos Business por business_id
+    console.log('Datos después de Radix Sort:', linkedListData.map(b => b.business));
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    document.getElementById('linkedListRadixSortTime').textContent = `${duration.toFixed(2)} ms`;
+    document.getElementById('linkedListRadixSortIterations').textContent = linkedListData.length; // No hay iteraciones en radixSort
 
-    console.log('Datos en LinkedList después de Radix Sort:', linkedList.recorrido().map(b => b.business));
+    updateChart();
 });
 
+// Update charts with new data
+function updateChart() {
+    chart1.data.datasets[0].data = [
+        parseFloat(document.getElementById('arrayBubbleSortTime').textContent) || 0,
+        parseFloat(document.getElementById('arrayMergeSortTime').textContent) || 0,
+        parseFloat(document.getElementById('arrayRadixSortTime').textContent) || 0
+    ];
+    chart1.update();
+
+    chart2.data.datasets[0].data = [
+        parseInt(document.getElementById('arrayBubbleSortIterations').textContent) || 0,
+        parseInt(document.getElementById('arrayMergeSortIterations').textContent) || 0,
+        parseInt(document.getElementById('arrayRadixSortIterations').textContent) || 0
+    ];
+    chart2.update();
+
+    chart3.data.datasets[0].data = [
+        parseFloat(document.getElementById('linkedListBubbleSortTime').textContent) || 0,
+        parseFloat(document.getElementById('linkedListMergeSortTime').textContent) || 0,
+        parseFloat(document.getElementById('linkedListRadixSortTime').textContent) || 0
+    ];
+    chart3.update();
+
+    chart4.data.datasets[0].data = [
+        parseInt(document.getElementById('linkedListBubbleSortIterations').textContent) || 0,
+        parseInt(document.getElementById('linkedListMergeSortIterations').textContent) || 0,
+        parseInt(document.getElementById('linkedListRadixSortIterations').textContent) || 0
+    ];
+    chart4.update();
+}
 
 //----------------------------------------------------------------
 function getMaxLength(arr) {
