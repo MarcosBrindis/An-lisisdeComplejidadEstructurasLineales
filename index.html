@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Bussines</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dataset Bussines</h1>
+
+        <!-- Section for Array Operations -->
+        <section class="section">
+            <h2>Array Operations</h2>
+            <div class="button-group">
+                <button id="insertArray">Insert Dataset</button>
+                <div class="search-container">
+                    <input type="text" id="searchArrayInput" placeholder="Enter value to search">
+                    <button id="searchArray">Search Record</button>
+                </div>
+                <button id="bubbleSortArray">Bubble Sort</button>
+                <button id="mergeSortArray">Merge Sort</button>
+                <button id="radixSortArray">Radix Sort</button>
+            </div>
+            <div class="results">
+                <ul id="list-business"></ul>
+                <p><strong>Insertion Time:</strong> <span id="arrayInsertTime">--</span></p>
+                <p><strong>Search Time:</strong> <span id="arraySearchTime">--</span></p>
+                <p><strong>Bubble Sort Time:</strong> <span id="arrayBubbleSortTime">--</span></p>
+                <p><strong>Merge Sort Time:</strong> <span id="arrayMergeSortTime">--</span></p>
+                <p><strong>Radix Sort Time:</strong> <span id="arrayRadixSortTime">--</span></p>
+                <p><strong>Bubble Sort Iterations:</strong> <span id="arrayBubbleSortIterations">--</span></p>
+                <p><strong>Merge Sort Iterations:</strong> <span id="arrayMergeSortIterations">--</span></p>
+                <p><strong>Radix Sort Iterations:</strong> <span id="arrayRadixSortIterations">--</span></p>
+            </div>
+        </section>
+
+        <!-- Section for LinkedList Operations -->
+        <section class="section">
+            <h2>LinkedList Operations</h2>
+            <div class="button-group">
+                <button id="insertLinkedList">Insert Dataset</button>
+                <div class="search-container">
+                    <input type="text" id="searchLinkedListInput" placeholder="Enter value to search">
+                    <button id="searchLinkedList">Search Record</button>
+                </div>
+                <button id="bubbleSortLinkedList">Bubble Sort</button>
+                <button id="mergeSortLinkedList">Merge Sort</button>
+                <button id="radixSortLinkedList">Radix Sort</button>
+            </div>
+            <div class="results">
+                <p><strong>Insertion Time:</strong> <span id="linkedListInsertTime">--</span></p>
+                <p><strong>Search Time:</strong> <span id="linkedListSearchTime">--</span></p>
+                <p><strong>Bubble Sort Time:</strong> <span id="linkedListBubbleSortTime">--</span></p>
+                <p><strong>Merge Sort Time:</strong> <span id="linkedListMergeSortTime">--</span></p>
+                <p><strong>Radix Sort Time:</strong> <span id="linkedListRadixSortTime">--</span></p>
+                <p><strong>Bubble Sort Iterations:</strong> <span id="linkedListBubbleSortIterations">--</span></p>
+                <p><strong>Merge Sort Iterations:</strong> <span id="linkedListMergeSortIterations">--</span></p>
+                <p><strong>Radix Sort Iterations:</strong> <span id="linkedListRadixSortIterations">--</span></p>
+            </div>
+        </section>
+    </div>
+</body>
+<script type="module" src="/src/controllers/scripts.mjs"></script>
+</html>
